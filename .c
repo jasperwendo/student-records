@@ -63,8 +63,10 @@ void calculate_average_score( float average_score )
     int i;
     for (int i = 0; i < num_students; i++)
     {
-        printf("enter name");
-        scanf("%c",&name);
+       printf("enter name");
+        printf("enter reg_no");
+        printf("enter department");
+        printf("enter course");
 
     }
     
