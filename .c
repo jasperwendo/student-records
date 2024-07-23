@@ -8,8 +8,7 @@ struct students
     char departement;
 
 };
-struct student student [100];
-
+struct students student [100];
 int num_students = 0;
 
 void calculate_average_score( float average_score )
@@ -41,7 +40,12 @@ void calculate_average_score( float average_score )
      printf("'F'");
     
   }
-  void insert_students(char name,int reg_no,char course,char department,char grade){
+  void insert_students(){
+  	char name;
+    int reg_no;
+    char course;
+    char department;
+    char grade;
    printf("enter student name");
    scanf("%c",&name);
    printf("enter reg_no");
@@ -59,7 +63,15 @@ void calculate_average_score( float average_score )
     printf("Student information added successfully.");
    
   }
- void display_student(char name,int reg_no,char department,char course,float average_score,char grade){
+  void display_student(){
+  	char name;
+    int reg_no;
+    char course;
+    char department;
+    char grade;
+    float average_score;
+    
+    
     int i;
     for (int i = 0; i < num_students; i++)
    if (i < num_students){
@@ -81,27 +93,27 @@ void calculate_average_score( float average_score )
    {
     printf("\n1.insert student record");
     printf("2.display student record");
-    printf("3.delete student record");
+    printf("3.delete record");
     printf("4.update student record");
     printf("5.search for student record");
     printf("6.exit");
 
     switch (choice) {
     case 1:
-        insert_student();
+        insert_students();
         break;
     
     case 2:
     display_student();
         break;
     case 3:
-    delete_record();
+    printf("deleting record");
     break;
     case 4:
-    update_record();
+    printf("updating record");
     break;
     case 5:
-    search_record();
+    printf("searching record");
     break;
     case 6:
     printf("exiting program");
@@ -115,3 +127,4 @@ void calculate_average_score( float average_score )
    return 0;
    
   }
+
