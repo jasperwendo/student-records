@@ -59,15 +59,59 @@ void calculate_average_score( float average_score )
     printf("Student information added successfully.");
    
   }
-  void display_student(char name,int reg_no,char department,char course){
+ void display_student(char name,int reg_no,char department,char course,float average_score,char grade){
     int i;
     for (int i = 0; i < num_students; i++)
-    {
-       printf("enter name");
+   if (i < num_students){
+
+        printf("enter name");
         printf("enter reg_no");
         printf("enter department");
         printf("enter course");
+        printf("enter average score");
+        printf("enter grade");
+    }
+    else
+    printf("student record not found");
+    
+  }
+  int main(){
+   int choice;
+   do
+   {
+    printf("\n1.insert student record");
+    printf("2.display student record");
+    printf("3.delete student record");
+    printf("4.update student record");
+    printf("5.search for student record");
+    printf("6.exit");
+
+    switch (choice) {
+    case 1:
+        insert_student();
+        break;
+    
+    case 2:
+    display_student();
+        break;
+    case 3:
+    delete_record();
+    break;
+    case 4:
+    update_record();
+    break;
+    case 5:
+    search_record();
+    break;
+    case 6:
+    printf("exiting program");
+    break;
+    default:
+    printf("invalid choice");
 
     }
-    
+
+   } while (choice !=6);
+   return 0;
+   
   }
