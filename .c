@@ -1,130 +1,128 @@
 #include <stdio.h>
+#include <string.h>
 
-struct students
-{
-    char name;
+#define MAX_STUDENTS 100
+
+struct Student {
+    char name[100];
     int reg_no;
-    char course;
-    char departement;
-
+    char course[50];
+    char department[50];
+    float total_scores;
+    int num_scores;
+    float average_score;
+    char grade;
 };
-struct students student [100];
+
+struct Student students[MAX_STUDENTS];
 int num_students = 0;
 
-void calculate_average_score( float average_score )
-  {
-    float total_scores;
-    float num_scores;
-    printf("enter total_score");
-    scanf("%f",&total_scores);
-    printf("enter num_scores");
-    scanf("%f",&num_scores);
+// Function Prototypes
+float calculate_average_score(float total_scores, int num_scores);
+char calculate_grade(float average_score);
+void insert_student();
+void display_students();
 
-    average_score= total_scores / num_scores;
-    printf("average_score:%f",average_score);
+// Calculate average score based on total scores and number of scores
+float calculate_average_score(float total_scores, int num_scores) {
+    if (num_scores <= 0) {
+        printf("Error: Number of scores must be a positive integer.\n");
+        return 0.0f;
+    }
+    return total_scores / num_scores;
+}
 
+// Determine grade using academic grading scale
+char calculate_grade(float average_score) {
+    if (average_score >= 90 && average_score <= 100) return 'A';
+    else if (average_score >= 80) return 'B';
+    else if (average_score >= 70) return 'C';
+    else if (average_score >= 60) return 'D';
+    else return 'F';
+}
 
-  }
-  void calculate_grade(char grade,float average_score)
-  {
-    if (average_score >= 90 && average_score <= 100)
-     printf("'A'");
-     else if (average_score >= 80 && average_score < 90)
-     
-     printf("'B'");
-     else if(average_score >= 70 && average_score < 80)
-     printf("'C'");
-     else if(average_score >= 60 && average_score < 70)
-     printf("'D'");
-     else
-     printf("'F'");
-    
-  }
-  void insert_students(){
-  	char name;
-    int reg_no;
-    char course;
-    char department;
-    char grade;
-   printf("enter student name");
-   scanf("%c",&name);
-   printf("enter reg_no");
-   scanf("%d",&reg_no);
-   printf("enter course name");
-   scanf("%c",&course);
-   printf("enter department");
-   scanf("%c",&department);
+// Insert student data into the record system
+void insert_student() {
+    if (num_students >= MAX_STUDENTS) {
+        printf("Student database is full. Cannot add more students.\n");
+        return;
+    }
 
-    printf("enter grade|");
-    scanf("%c",&grade);
+    struct Student *current = &students[num_students];
 
-    num_students = name, reg_no,course, department,grade;
+    printf("\nEnter student name (up to 99 characters): ");
+    scanf(" %99[^\n]", current->name);
+
+    printf("Enter registration number: ");
+    scanf("%d", &current->reg_no);
+
+    printf("Enter course name (up to 49 characters): ");
+    scanf(" %49[^\n]", current->course);
+
+    printf("Enter department name (up to 49 characters): ");
+    scanf(" %49[^\n]", current->department);
+
+    printf("Enter total scores: ");
+    scanf("%f", &current->total_scores);
+
+    printf("Enter number of scores: ");
+    scanf("%d", &current->num_scores);
+
+    if (current->num_scores <= 0) {
+        printf("Error: Number of scores must be a positive integer. Record not added.\n");
+        return;
+    }
+
+    current->average_score = calculate_average_score(current->total_scores, current->num_scores);
+    current->grade = calculate_grade(current->average_score);
+
     num_students++;
-    printf("Student information added successfully.");
-   
-  }
-  void display_student(){
-  	char name;
-    int reg_no;
-    char course;
-    char department;
-    char grade;
-    float average_score;
-    
-    
-    int i;
-    for (int i = 0; i < num_students; i++)
-   if (i < num_students){
+    printf("\nStudent information added successfully.\n");
+}
 
-        printf("enter name");
-        printf("enter reg_no");
-        printf("enter department");
-        printf("enter course");
-        printf("enter average score");
-        printf("enter grade");
-    }
-    else
-    printf("student record not found");
-    
-  }
-  int main(){
-   int choice;
-   do
-   {
-    printf("\n1.insert student record");
-    printf("2.display student record");
-    printf("3.delete record");
-    printf("4.update student record");
-    printf("5.search for student record");
-    printf("6.exit");
-
-    switch (choice) {
-    case 1:
-        insert_students();
-        break;
-    
-    case 2:
-    display_student();
-        break;
-    case 3:
-    printf("deleting record");
-    break;
-    case 4:
-    printf("updating record");
-    break;
-    case 5:
-    printf("searching record");
-    break;
-    case 6:
-    printf("exiting program");
-    break;
-    default:
-    printf("invalid choice");
-
+// Display all saved student records
+void display_students() {
+    if (num_students == 0) {
+        printf("No student records found.\n");
+        return;
     }
 
-   } while (choice !=6);
-   return 0;
-   
-  }
+    printf("\n=== Student Records ===\n");
+    printf("%-10s %-10s %-20s %-20s %-15s %s\n", 
+           "Reg No", "Name", "Course", "Department", "Avg Score", "Grade");
 
+    for (int i = 0; i < num_students; i++) {
+        printf("%-10d %-10s %-20s %-20s %-15.2f %c\n",
+               students[i].reg_no, students[i].name, students[i].course,
+               students[i].department, students[i].average_score, students[i].grade);
+    }
+    printf("\n");
+}
+
+// Main program loop
+int main() {
+    int choice;
+    do {
+        printf("\n1. Insert Student Record");
+        printf("\n2. Display Student Records");
+        printf("\n3. Delete Record (Not Implemented)");
+        printf("\n4. Update Record (Not Implemented)");
+        printf("\n5. Search Record (Not Implemented)");
+        printf("\n6. Exit");
+
+        printf("\nEnter your choice (1-6): ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1: insert_student(); break;
+            case 2: display_students(); break;
+            case 3: printf("Feature not available.\n"); break;
+            case 4: printf("Feature not available.\n"); break;
+            case 5: printf("Feature not available.\n"); break;
+            case 6: printf("\nExiting program.\n"); break;
+            default: printf("\nInvalid choice. Please choose 1-6.\n");
+        }
+    } while (choice != 6);
+
+    return 0;
+}
